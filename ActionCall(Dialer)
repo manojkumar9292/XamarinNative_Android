@@ -1,0 +1,41 @@
+using Android.App;
+using Android.OS;
+using Android.Support.V7.App;
+using Android.Runtime;
+using Android.Widget;
+using Android.Content;
+using Android.Support.V4.Content;
+using System.Runtime.Remoting.Contexts;
+using System.Security;
+using Android.Telecom;
+using Xamarin.Essentials;
+using Android.Support.V4.App;
+using System;
+using Android;
+
+namespace App10
+{
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
+    public class MainActivity : AppCompatActivity
+    {
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+          
+            SetContentView(Resource.Layout.activity_main);
+            Button btn = FindViewById<Button>(Resource.Id.button1);
+
+            //for ActionCall, we need to set runtime persmission
+            RequestPermissions(new String[] {Manifest.Permission.CallPhone }, 1);
+            btn.Click += (object sender, System.EventArgs e) =>
+             {
+                 var uri = Android.Net.Uri.Parse("tel:" + 819180);
+                 var intent = new Intent(Intent.ActionCall, uri);
+                 StartActivity(intent);
+             };
+
+
+        }
+    }
+}
